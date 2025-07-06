@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="site_title">WebToolBox - आपके काम आने वाले ऑनलाइन टूल्स</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Icon Library (for theme switcher icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Styles - All the design is here -->
+    <style>
+        /* CSS Variables for Theming (Light & Dark Mode) */
+        :root {
+            --light-bg: #f8fafc;
+            --light-surface: #ffffff;
+            --light-text: #0f172a;
+            --light-text-secondary: #475569;
+            --light-border: #e2e8f0;
+
+            --dark-bg: #0b1120;
+            --dark-surface: #1e293b;
+            --dark-text: #e2e8f0;
+            --dark-text-secondary: #94a3b8;
+            --dark-border: #334155;
+
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent-color: #ec4899;
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--light-bg);
+            --surface-color: var(--light-surface);
+            --text-color: var(--light-text);
+            --text-secondary-color: var(--light-text-secondary);
+            --border-color: var(--light-border);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--dark-bg);
+            --surface-color: var(--dark-surface);
+            --text-color: var(--dark-text);
+            --text-secondary-color: var(--dark-text-secondary);
+            --border-color: var(--dark-border);
+        }
+
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        main {
+            padding: 0 5%;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--surface-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Language & Theme Switcher */
+        .language-switcher, .theme-switcher {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .theme-switcher {
+            font-size: 1.1rem;
+            padding: 0.5rem 0.8rem;
+        }
+
+        .language-switcher:hover, .theme-switcher:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary-color);
+            max-width: 650px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        [data-theme="dark"] .tool-card:hover {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h3 {
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.3rem;
+            color: var(--text-color);
+        }
+
+        .tool-card p {
+            margin: 0;
+            color: var(--text-secondary-color);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-controls { gap: 1rem; }
+            .logo { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Language and Theme Switcher -->
+    <header>
+        <nav>
+            <div class="logo">WebToolBox</div>
+            <div class="nav-controls">
+                <button class="language-switcher" id="lang-switcher">English</button>
+                <button class="theme-switcher" id="theme-switcher">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 data-lang-key="hero_title">आपके हर काम आने वाले वेब टूल्स</h1>
+            <p data-lang-key="hero_subtitle">एक ही जगह पर पाएं दर्जनों मुफ्त कैलकुलेटर, कन्वर्टर, और जेनरेटर। आपका काम आसान बनाने के लिए, एक सुंदर और तेज इंटरफ़ेस में।</p>
+        </section>
+
+        <!-- Tools Grid Section -->
+        <section class="tools-section">
+            <h2 class="section-title" data-lang-key="tools_title">हमारे लोकप्रिय टूल्स</h2>
+            
+            <div class="grid-container">
+                <!-- Tool Card: BMI Calculator -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3 data-lang-key="tool_bmi_title">BMI Calculator</h3>
+                    <p data-lang-key="tool_bmi_desc">अपने बॉडी मास इंडेक्स को मापें और अपनी फिटनेस का पता लगाएं।</p>
+                </a>
+                
+                <!-- Tool Card: Password Generator -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-key"></i>
+                    <h3 data-lang-key="tool_pass_title">Password Generator</h3>
+                    <p data-lang-key="tool_pass_desc">ऑनलाइन सुरक्षा के लिए एक मजबूत और यूनिक पासवर्ड बनाएं।</p>
+                </a>
+
+                <!-- Tool Card: QR Code Generator -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3 data-lang-key="tool_qr_title">QR Code Generator</h3>
+                    <p data-lang-key="tool_qr_desc">किसी भी टेक्स्ट या वेबसाइट लिंक का तुरंत QR कोड बनाएं।</p>
+                </a>
+                
+                <!-- Tool Card: Age Calculator -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-cake-candles"></i>
+                    <h3 data-lang-key="tool_age_title">Age Calculator</h3>
+                    <p data-lang-key="tool_age_desc">अपनी जन्मतिथि से अपनी सटीक उम्र, महीने और दिन जानें।</p>
+                </a>
+                
+                <!-- Tool Card: Image Converter -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-image"></i>
+                    <h3 data-lang-key="tool_img_title">Image Converter</h3>
+                    <p data-lang-key="tool_img_desc">अपनी छवियों को JPG, PNG, WEBP जैसे फॉर्मेट में बदलें।</p>
+                </a>
+
+                <!-- Tool Card: Text Converter -->
+                <a href="#" class="tool-card">
+                    <i class="fas fa-font"></i>
+                    <h3 data-lang-key="tool_case_title">Case Converter</h3>
+                    <p data-lang-key="tool_case_desc">टेक्स्ट को अपरकेस, लोअरकेस या सेंटेंस केस में बदलें।</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 WebToolBox. <span data-lang-key="footer_rights">All Rights Reserved.</span></p>
+    </footer>
+
+    <!-- JavaScript for all functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. THEME SWITCHER LOGIC ---
+            const themeSwitcher = document.getElementById('theme-switcher');
+            const themeIcon = themeSwitcher.querySelector('i');
+            const html = document.documentElement;
+
+            // Load saved theme from localStorage
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            html.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+
+            themeSwitcher.addEventListener('click', () => {
+                const currentTheme = html.getAttribute('data-theme');
+                if (currentTheme === 'light') {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+
+
+            // --- 2. LANGUAGE SWITCHER LOGIC ---
+            const langSwitcher = document.getElementById('lang-switcher');
+
+            // Language Data
+            const translations = {
+                'hi': {
+                    'site_title': 'WebToolBox - आपके काम आने वाले ऑनलाइन टूल्स',
+                    'hero_title': 'आपके हर काम आने वाले वेब टूल्स',
+                    'hero_subtitle': 'एक ही जगह पर पाएं दर्जनों मुफ्त कैलकुलेटर, कन्वर्टर, और जेनरेटर। आपका काम आसान बनाने के लिए, एक सुंदर और तेज इंटरफ़ेस में।',
+                    'tools_title': 'हमारे लोकप्रिय टूल्स',
+                    'tool_bmi_title': 'बीएमआई कैलकुलेटर',
+                    'tool_bmi_desc': 'अपने बॉडी मास इंडेक्स को मापें और अपनी फिटनेस का पता लगाएं।',
+                    'tool_pass_title': 'पासवर्ड जेनरेटर',
+                    'tool_pass_desc': 'ऑनलाइन सुरक्षा के लिए एक मजबूत और यूनिक पासवर्ड बनाएं।',
+                    'tool_qr_title': 'क्यूआर कोड जेनरेटर',
+                    'tool_qr_desc': 'किसी भी टेक्स्ट या वेबसाइट लिंक का तुरंत QR कोड बनाएं।',
+                    'tool_age_title': 'आयु कैलकुलेटर',
+                    'tool_age_desc': 'अपनी जन्मतिथि से अपनी सटीक उम्र, महीने और दिन जानें।',
+                    'tool_img_title': 'इमेज कन्वर्टर',
+                    'tool_img_desc': 'अपनी छवियों को JPG, PNG, WEBP जैसे फॉर्मेट में बदलें।',
+                    'tool_case_title': 'केस कन्वर्टर',
+                    'tool_case_desc': 'टेक्स्ट को अपरकेस, लोअरकेस या सेंटेंस केस में बदलें।',
+                    'footer_rights': 'सर्वाधिकार सुरक्षित।',
+                    'lang_button': 'English'
+                },
+                'en': {
+                    'site_title': 'WebToolBox - Your Everyday Online Tools',
+                    'hero_title': 'The Web Tools You Need, All In One Place',
+                    'hero_subtitle': 'Get dozens of free calculators, converters, and generators. Designed to make your work easier in a beautiful and fast interface.',
+                    'tools_title': 'Our Popular Tools',
+                    'tool_bmi_title': 'BMI Calculator',
+                    'tool_bmi_desc': 'Measure your Body Mass Index and check your fitness level.',
+                    'tool_pass_title': 'Password Generator',
+                    'tool_pass_desc': 'Create strong and unique passwords for your online security.',
+                    'tool_qr_title': 'QR Code Generator',
+                    'tool_qr_desc': 'Instantly create a QR code for any text or website link.',
+                    'tool_age_title': 'Age Calculator',
+                    'tool_age_desc': 'Find out your exact age, months, and days from your birth date.',
+                    'tool_img_title': 'Image Converter',
+                    'tool_img_desc': 'Convert your images to formats like JPG, PNG, WEBP.',
+                    'tool_case_title': 'Case Converter',
+                    'tool_case_desc': 'Change text to UPPERCASE, lowercase, or Sentence case.',
+                    'footer_rights': 'All Rights Reserved.',
+                    'lang_button': 'हिन्दी'
+                }
+            };
+
+            const setLanguage = (lang) => {
+                document.querySelectorAll('[data-lang-key]').forEach(element => {
+                    const key = element.getAttribute('data-lang-key');
+                    element.textContent = translations[lang][key];
+                });
+                html.setAttribute('lang', lang);
+                langSwitcher.textContent = translations[lang]['lang_button'];
+                localStorage.setItem('language', lang);
+            };
+
+            // Load saved language
+            const savedLang = localStorage.getItem('language') || 'hi';
+            setLanguage(savedLang);
+
+            langSwitcher.addEventListener('click', () => {
+                const currentLang = html.getAttribute('lang');
+                const newLang = currentLang === 'hi' ? 'en' : 'hi';
+                setLanguage(newLang);
+            });
+        });
+    </script>
+</body>
+</html>
