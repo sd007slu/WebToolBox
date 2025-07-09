@@ -1,391 +1,459 @@
 <!DOCTYPE html>
-<html lang="hi" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="site_title">WebToolBox - आपके काम आने वाले ऑनलाइन टूल्स</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pocket Genie - All in One Online Tools</title>
+  <style>
+    :root {
+      --bg-color: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text-color: #212529;
+      --primary-color: #007BFF;
+      --primary-hover: #0056b3;
+      --header-bg: #007BFF;
+      --header-text: #FFFFFF;
+      --border-color: #DEE2E6;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --card-bg: #1E1E1E;
+      --text-color: #E0E0E0;
+      --primary-color: #3B82F6;
+      --primary-hover: #2563EB;
+      --header-bg: #1E1E1E;
+      --header-text: #3B82F6;
+      --border-color: #444444;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 15px 10px;
+      font-size: 1.8em;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Icon Library (for theme switcher icon) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    .controls-container {
+      padding: 10px;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
 
-    <!-- CSS Styles - All the design is here -->
-    <style>
-        /* CSS Variables for Theming (Light & Dark Mode) */
-        :root {
-            --light-bg: #f8fafc;
-            --light-surface: #ffffff;
-            --light-text: #0f172a;
-            --light-text-secondary: #475569;
-            --light-border: #e2e8f0;
+    .switch-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 0 5px;
+      transition: background-color 0.3s;
+    }
 
-            --dark-bg: #0b1120;
-            --dark-surface: #1e293b;
-            --dark-text: #e2e8f0;
-            --dark-text-secondary: #94a3b8;
-            --dark-border: #334155;
+    .switch-btn:hover {
+      background-color: var(--primary-hover);
+    }
 
-            --primary-color: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent-color: #ec4899;
-        }
+    .tools-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
 
-        [data-theme="light"] {
-            --bg-color: var(--light-bg);
-            --surface-color: var(--light-surface);
-            --text-color: var(--light-text);
-            --text-secondary-color: var(--light-text-secondary);
-            --border-color: var(--light-border);
-        }
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin: 15px;
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        [data-theme="dark"] {
-            --bg-color: var(--dark-bg);
-            --surface-color: var(--dark-surface);
-            --text-color: var(--dark-text);
-            --text-secondary-color: var(--dark-text-secondary);
-            --border-color: var(--dark-border);
-        }
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
 
-        /* General Styling */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.7;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        main {
-            padding: 0 5%;
-        }
+    .tool-card h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
 
-        /* Header & Navigation */
-        header {
-            background-color: var(--surface-color);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 1rem 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: background-color 0.3s;
-        }
+    .tool-card input, .tool-card textarea, .tool-card button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 95%;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      border-radius: 6px;
+    }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .tool-card button {
+      background: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
+    .tool-card button:hover {
+      background: var(--primary-hover);
+    }
 
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
+    .output {
+      margin-top: 15px;
+      font-weight: bold;
+      color: var(--text-color);
+      min-height: 20px;
+      word-wrap: break-word;
+      background-color: var(--bg-color);
+      padding: 10px;
+      border-radius: 5px;
+    }
 
-        /* Language & Theme Switcher */
-        .language-switcher, .theme-switcher {
-            background: none;
-            border: 2px solid var(--border-color);
-            color: var(--text-secondary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .theme-switcher {
-            font-size: 1.1rem;
-            padding: 0.5rem 0.8rem;
-        }
+    .ad-container {
+        width: 100%;
+        margin: 15px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    footer {
+        background-color: var(--card-bg);
+        padding: 20px;
+        margin-top: 30px;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .policy-section details {
+        margin-bottom: 10px;
+        text-align: left;
+        background-color: var(--bg-color);
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .policy-section summary {
+        font-weight: bold;
+        cursor: pointer;
+        color: var(--primary-color);
+    }
 
-        .language-switcher:hover, .theme-switcher:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 5rem 1rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary-color);
-            max-width: 650px;
-            margin: 0 auto 2rem auto;
-        }
-
-        /* Tools Grid */
-        .tools-section {
-            padding: 2rem 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--text-color);
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .tool-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        [data-theme="dark"] .tool-card:hover {
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-
-        .tool-card i {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .tool-card h3 {
-            margin: 1rem 0 0.5rem 0;
-            font-size: 1.3rem;
-            color: var(--text-color);
-        }
-
-        .tool-card p {
-            margin: 0;
-            color: var(--text-secondary-color);
-            font-size: 0.95rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 4rem;
-            background-color: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-controls { gap: 1rem; }
-            .logo { font-size: 1.5rem; }
-        }
-    </style>
+    @media (max-width: 680px) {
+      .tool-card {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header data-lang-key="headerTitle">
+     pocket-genie 
+  </header>
+  
+  <div class="controls-container">
+    <button class="switch-btn" id="lang-toggle-btn" data-lang-key="langToggleBtn">Switch to Hindi</button>
+    <button class="switch-btn" id="theme-toggle-btn" data-lang-key="themeToggleBtn">🌙 Dark Mode</button>
+  </div>
 
-    <!-- Header with Language and Theme Switcher -->
-    <header>
-        <nav>
-            <div class="logo">WebToolBox</div>
-            <div class="nav-controls">
-                <button class="language-switcher" id="lang-switcher">English</button>
-                <button class="theme-switcher" id="theme-switcher">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
-        </nav>
-    </header>
+  <div class="tools-container">
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 data-lang-key="hero_title">आपके हर काम आने वाले वेब टूल्स</h1>
-            <p data-lang-key="hero_subtitle">एक ही जगह पर पाएं दर्जनों मुफ्त कैलकुलेटर, कन्वर्टर, और जेनरेटर। आपका काम आसान बनाने के लिए, एक सुंदर और तेज इंटरफ़ेस में।</p>
-        </section>
+    <!-- Tool 1 -->
+    <div class="tool-card">
+      <h3 data-lang-key="ageCalculatorTitle">🎂 Age Calculator</h3>
+      <input type="date" id="dob" />
+      <button onclick="calculateAge()" data-lang-key="calculateBtn">Calculate</button>
+      <div class="output" id="ageResult"></div>
+    </div>
 
-        <!-- Tools Grid Section -->
-        <section class="tools-section">
-            <h2 class="section-title" data-lang-key="tools_title">हमारे लोकप्रिय टूल्स</h2>
-            
-            <div class="grid-container">
-                <!-- Tool Card: BMI Calculator -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-calculator"></i>
-                    <h3 data-lang-key="tool_bmi_title">BMI Calculator</h3>
-                    <p data-lang-key="tool_bmi_desc">अपने बॉडी मास इंडेक्स को मापें और अपनी फिटनेस का पता लगाएं।</p>
-                </a>
-                
-                <!-- Tool Card: Password Generator -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-key"></i>
-                    <h3 data-lang-key="tool_pass_title">Password Generator</h3>
-                    <p data-lang-key="tool_pass_desc">ऑनलाइन सुरक्षा के लिए एक मजबूत और यूनिक पासवर्ड बनाएं।</p>
-                </a>
+    <!-- Tool 2 -->
+    <div class="tool-card">
+      <h3 data-lang-key="emiCalculatorTitle">💰 EMI Calculator</h3>
+      <input type="number" id="amount" data-lang-key="loanAmountPlaceholder" placeholder="Loan Amount" />
+      <input type="number" id="rate" data-lang-key="interestRatePlaceholder" placeholder="Interest Rate (%)" />
+      <input type="number" id="months" data-lang-key="monthsPlaceholder" placeholder="Months" />
+      <button onclick="calculateEMI()" data-lang-key="calculateBtn">Calculate</button>
+      <div class="output" id="emiResult"></div>
+    </div>
 
-                <!-- Tool Card: QR Code Generator -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-qrcode"></i>
-                    <h3 data-lang-key="tool_qr_title">QR Code Generator</h3>
-                    <p data-lang-key="tool_qr_desc">किसी भी टेक्स्ट या वेबसाइट लिंक का तुरंत QR कोड बनाएं।</p>
-                </a>
-                
-                <!-- Tool Card: Age Calculator -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-cake-candles"></i>
-                    <h3 data-lang-key="tool_age_title">Age Calculator</h3>
-                    <p data-lang-key="tool_age_desc">अपनी जन्मतिथि से अपनी सटीक उम्र, महीने और दिन जानें।</p>
-                </a>
-                
-                <!-- Tool Card: Image Converter -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-image"></i>
-                    <h3 data-lang-key="tool_img_title">Image Converter</h3>
-                    <p data-lang-key="tool_img_desc">अपनी छवियों को JPG, PNG, WEBP जैसे फॉर्मेट में बदलें।</p>
-                </a>
+    <!-- Ad after 2 Tools -->
+    <div class="ad-container">
+      <script type="text/javascript"> atOptions = {'key':'c77e084c35a962fe237bf0bbb8450bff','format':'iframe','height':50,'width':320,'params':{}}; </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/c77e084c35a962fe237bf0bbb8450bff/invoke.js"></script>
+    </div>
 
-                <!-- Tool Card: Text Converter -->
-                <a href="#" class="tool-card">
-                    <i class="fas fa-font"></i>
-                    <h3 data-lang-key="tool_case_title">Case Converter</h3>
-                    <p data-lang-key="tool_case_desc">टेक्स्ट को अपरकेस, लोअरकेस या सेंटेंस केस में बदलें।</p>
-                </a>
-            </div>
-        </section>
-    </main>
+    <!-- Tool 3 -->
+    <div class="tool-card">
+      <h3 data-lang-key="bmiCalculatorTitle">🏋️ BMI Calculator</h3>
+      <input type="number" id="weight" data-lang-key="weightPlaceholder" placeholder="Weight (kg)" />
+      <input type="number" id="height" data-lang-key="heightPlaceholder" placeholder="Height (cm)" />
+      <button onclick="calculateBMI()" data-lang-key="calculateBtn">Calculate</button>
+      <div class="output" id="bmiOutput"></div>
+    </div>
+    
+    <!-- Tool 4 -->
+    <div class="tool-card">
+      <h3 data-lang-key="tipCalculatorTitle">🍽️ Tip Calculator</h3>
+      <input type="number" id="bill" data-lang-key="totalBillPlaceholder" placeholder="Total Bill" />
+      <input type="number" id="tip" data-lang-key="tipPlaceholder" placeholder="Tip %" />
+      <button onclick="calculateTip()" data-lang-key="calculateBtn">Calculate</button>
+      <div class="output" id="tipResult"></div>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 WebToolBox. <span data-lang-key="footer_rights">All Rights Reserved.</span></p>
-    </footer>
+    <!-- Ad after 4 Tools -->
+    <div class="ad-container">
+      <script type="text/javascript"> atOptions = {'key':'c77e084c35a962fe237bf0bbb8450bff','format':'iframe','height':50,'width':320,'params':{}}; </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/c77e084c35a962fe237bf0bbb8450bff/invoke.js"></script>
+    </div>
 
-    <!-- JavaScript for all functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- 1. THEME SWITCHER LOGIC ---
-            const themeSwitcher = document.getElementById('theme-switcher');
-            const themeIcon = themeSwitcher.querySelector('i');
-            const html = document.documentElement;
+    <!-- Tool 5 -->
+    <div class="tool-card">
+      <h3 data-lang-key="discountCalculatorTitle">💸 Discount Calculator</h3>
+      <input type="number" id="originalPrice" data-lang-key="originalPricePlaceholder" placeholder="Original Price" />
+      <input type="number" id="discountPercent" data-lang-key="discountPercentPlaceholder" placeholder="Discount %" />
+      <button onclick="calculateDiscount()" data-lang-key="calculateBtn">Calculate</button>
+      <div class="output" id="discountResult"></div>
+    </div>
+    
+    <!-- Tool 6 -->
+    <div class="tool-card">
+        <h3 data-lang-key="wordCounterTitle">📊 Word & Character Counter</h3>
+        <textarea id="wordInput" rows="4" data-lang-key="wordInputPlaceholder" placeholder="Type or paste text here..."></textarea>
+        <button onclick="countWords()" data-lang-key="countBtn">Count</button>
+        <div class="output" id="wordCountResult"></div>
+    </div>
+    
+    <!-- Ad after 6 Tools -->
+    <div class="ad-container">
+      <script type="text/javascript"> atOptions = {'key':'c77e084c35a962fe237bf0bbb8450bff','format':'iframe','height':50,'width':320,'params':{}}; </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/c77e084c35a962fe237bf0bbb8450bff/invoke.js"></script>
+    </div>
 
-            // Load saved theme from localStorage
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            html.setAttribute('data-theme', savedTheme);
-            if (savedTheme === 'dark') {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
+    <!-- Tool 7 -->
+    <div class="tool-card">
+        <h3 data-lang-key="caseConverterTitle">🔄 Case Converter</h3>
+        <textarea id="caseInput" rows="4" data-lang-key="caseInputPlaceholder" placeholder="Type text to convert..."></textarea>
+        <button onclick="convertToUppercase()" data-lang-key="uppercaseBtn">UPPERCASE</button>
+        <button onclick="convertToLowercase()" data-lang-key="lowercaseBtn">lowercase</button>
+    </div>
 
-            themeSwitcher.addEventListener('click', () => {
-                const currentTheme = html.getAttribute('data-theme');
-                if (currentTheme === 'light') {
-                    html.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
+    <!-- Tool 8 -->
+    <div class="tool-card">
+        <h3 data-lang-key="passwordGeneratorTitle">🔒 Password Generator</h3>
+        <input type="number" id="passLength" value="12" data-lang-key="passLengthPlaceholder" placeholder="Password Length" />
+        <button onclick="generatePassword()" data-lang-key="generateBtn">Generate</button>
+        <div class="output" id="passwordResult" style="cursor: pointer;" onclick="copyToClipboard('passwordResult')"></div>
+    </div>
+    
+    <!-- Ad after 8 Tools -->
+    <div class="ad-container">
+      <script type="text/javascript"> atOptions = {'key':'c77e084c35a962fe237bf0bbb8450bff','format':'iframe','height':50,'width':320,'params':{}}; </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/c77e084c35a962fe237bf0bbb8450bff/invoke.js"></script>
+    </div>
+    
+    <!-- Tool 9 -->
+    <div class="tool-card">
+        <h3 data-lang-key="loveCalculatorTitle">❤️ Love Calculator</h3>
+        <input type="text" id="name1" data-lang-key="yourNamePlaceholder" placeholder="Your Name" />
+        <input type="text" id="name2" data-lang-key="partnerNamePlaceholder" placeholder="Partner's Name" />
+        <button onclick="calculateLove()" data-lang-key="checkLoveBtn">Check Love %</button>
+        <div class="output" id="loveResult"></div>
+    </div>
+
+    <!-- Tool 10 -->
+    <div class="tool-card">
+        <h3 data-lang-key="imageToPngTitle">🖼️ Image to PNG</h3>
+        <input type="file" id="imageInput" accept="image/*" />
+        <button onclick="convertToPNG()" data-lang-key="convertBtn">Convert</button>
+        <div class="output" id="pngResult"></div>
+    </div>
+
+    <!-- Ad after 10 Tools -->
+    <div class="ad-container">
+      <script type="text/javascript"> atOptions = {'key':'c77e084c35a962fe237bf0bbb8450bff','format':'iframe','height':50,'width':320,'params':{}}; </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/c77e084c35a962fe237bf0bbb8450bff/invoke.js"></script>
+    </div>
+    
+    <!-- Tool 11 -->
+    <div class="tool-card">
+        <h3 data-lang-key="shayariGeneratorTitle">📝 Shayari Generator</h3>
+        <button onclick="generateShayari()" data-lang-key="generateShayariBtn">Generate Shayari</button>
+        <div class="output" id="shayariResult"></div>
+    </div>
+    
+    <!-- Tool 12 -->
+    <div class="tool-card">
+        <h3 data-lang-key="randomNumberTitle">🎲 Random Number Generator</h3>
+        <input type="number" id="minNum" value="1" placeholder="Min" />
+        <input type="number" id="maxNum" value="100" placeholder="Max" />
+        <button onclick="generateRandomNumber()" data-lang-key="generateBtn">Generate</button>
+        <div class="output" id="randomNumberResult"></div>
+    </div>
+    
+    <!-- Add more tools here following the same pattern... -->
+    
+  </div>
+  
+  <footer>
+    <div class="policy-section">
+        <h3 data-lang-key="policiesTitle">Policies & Guidelines</h3>
+        <details>
+            <summary data-lang-key="privacyPolicyTitle">Privacy Policy</summary>
+            <p data-lang-key="privacyPolicyText">Our website, Pocket Genie, is committed to protecting your privacy. We do not collect or store any personal data entered into our tools. All calculations and conversions are performed directly in your browser (client-side). Your data never leaves your device. We use third-party ad services that may use cookies to serve ads. You can check their respective privacy policies for more information.</p>
+        </details>
+        <details>
+            <summary data-lang-key="termsTitle">Terms & Conditions</summary>
+            <p data-lang-key="termsText">By using Pocket Genie, you agree to these terms. The tools provided are for informational and general purposes only. We do not guarantee the accuracy or reliability of the results and are not liable for any losses or damages resulting from their use. The service is provided "as is" without any warranties. Please use the information responsibly.</p>
+        </details>
+        <details>
+            <summary data-lang-key="disclaimerTitle">Disclaimer</summary>
+            <p data-lang-key="disclaimerText">The financial calculators (EMI, Discount, Tip) are for estimation purposes only and should not be considered as financial advice. For accurate financial decisions, please consult a qualified professional advisor. Health-related tools like the BMI calculator are for general awareness and are not a substitute for professional medical advice.</p>
+        </details>
+    </div>
+  </footer>
+
+  <script>
+    // --- Translation and Theme Logic ---
+    const languageStrings = {
+      en: {
+        headerTitle: "💡 Pocket Genie",
+        langToggleBtn: "Switch to Hindi",
+        themeToggleBtn: "🌙 Dark Mode",
+        calculateBtn: "Calculate",
+        countBtn: "Count",
+        convertBtn: "Convert",
+        generateBtn: "Generate",
+        uppercaseBtn: "UPPERCASE",
+        lowercaseBtn: "lowercase",
+        checkLoveBtn: "Check Love %",
+        generateShayariBtn: "Generate Shayari",
+        // Titles
+        ageCalculatorTitle: "🎂 Age Calculator",
+        emiCalculatorTitle: "💰 EMI Calculator",
+        bmiCalculatorTitle: "🏋️ BMI Calculator",
+        tipCalculatorTitle: "🍽️ Tip Calculator",
+        discountCalculatorTitle: "💸 Discount Calculator",
+        wordCounterTitle: "📊 Word & Character Counter",
+        caseConverterTitle: "🔄 Case Converter",
+        passwordGeneratorTitle: "🔒 Password Generator",
+        loveCalculatorTitle: "❤️ Love Calculator",
+        imageToPngTitle: "🖼️ Image to PNG",
+        shayariGeneratorTitle: "📝 Shayari Generator",
+        randomNumberTitle: "🎲 Random Number Generator",
+        // Placeholders
+        loanAmountPlaceholder: "Loan Amount",
+        interestRatePlaceholder: "Interest Rate (%)",
+        monthsPlaceholder: "Months",
+        weightPlaceholder: "Weight (kg)",
+        heightPlaceholder: "Height (cm)",
+        totalBillPlaceholder: "Total Bill",
+        tipPlaceholder: "Tip %",
+        originalPricePlaceholder: "Original Price",
+        discountPercentPlaceholder: "Discount %",
+        wordInputPlaceholder: "Type or paste text here...",
+        caseInputPlaceholder: "Type text to convert...",
+        passLengthPlaceholder: "Password Length",
+        yourNamePlaceholder: "Your Name",
+        partnerNamePlaceholder: "Partner's Name",
+        // Policies
+        policiesTitle: "Policies & Guidelines",
+        privacyPolicyTitle: "Privacy Policy",
+        privacyPolicyText: "Our website, Pocket Genie, is committed to protecting your privacy. We do not collect or store any personal data entered into our tools. All calculations and conversions are performed directly in your browser (client-side). Your data never leaves your device. We use third-party ad services that may use cookies to serve ads. You can check their respective privacy policies for more information.",
+        termsTitle: "Terms & Conditions",
+        termsText: "By using Pocket Genie, you agree to these terms. The tools provided are for informational and general purposes only. We do not guarantee the accuracy or reliability of the results and are not liable for any losses or damages resulting from their use. The service is provided \"as is\" without any warranties. Please use the information responsibly.",
+        disclaimerTitle: "Disclaimer",
+        disclaimerText: "The financial calculators (EMI, Discount, Tip) are for estimation purposes only and should not be considered as financial advice. For accurate financial decisions, please consult a qualified professional advisor. Health-related tools like the BMI calculator are for general awareness and are not a substitute for professional medical advice."
+      },
+      hi: {
+        headerTitle: "💡 पॉकेट जिनी",
+        langToggleBtn: "Switch to English",
+        themeToggleBtn: "🌙 डार्क मोड",
+        calculateBtn: "गणना करें",
+        countBtn: "गिनें",
+        convertBtn: "बदलें",
+        generateBtn: "बनाएं",
+        uppercaseBtn: "बड़े अक्षर",
+        lowercaseBtn: "छोटे अक्षर",
+        checkLoveBtn: "प्यार % जांचें",
+        generateShayariBtn: "शायरी बनाएं",
+        // Titles
+        ageCalculatorTitle: "🎂 आयु कैलकुलेटर",
+        emiCalculatorTitle: "💰 ईएमआई कैलकुलेटर",
+        bmiCalculatorTitle: "🏋️ बीएमआई कैलकुलेटर",
+        tipCalculatorTitle: "🍽️ टिप कैलकुलेटर",
+        discountCalculatorTitle: "💸 छूट कैलकुलेटर",
+        wordCounterTitle: "📊 शब्द और अक्षर काउंटर",
+        caseConverterTitle: "🔄 केस कनवर्टर",
+        passwordGeneratorTitle: "🔒 पासवर्ड जेनरेटर",
+        loveCalculatorTitle: "❤️ लव कैलकुलेटर",
+        imageToPngTitle: "🖼️ इमेज से पीएनजी",
+        shayariGeneratorTitle: "📝 शायरी जेनरेटर",
+        randomNumberTitle: "🎲 रैंडम नंबर जेनरेटर",
+        // Placeholders
+        loanAmountPlaceholder: "लोन राशि",
+        interestRatePlaceholder: "ब्याज दर (%)",
+        monthsPlaceholder: "महीने",
+        weightPlaceholder: "वजन (kg)",
+        heightPlaceholder: "ऊंचाई (cm)",
+        totalBillPlaceholder: "कुल बिल",
+        tipPlaceholder: "टिप %",
+        originalPricePlaceholder: "मूल कीमत",
+        discountPercentPlaceholder: "छूट %",
+        wordInputPlaceholder: "यहां टेक्स्ट टाइप या पेस्ट करें...",
+        caseInputPlaceholder: "बदलने के लिए टेक्स्ट टाइप करें...",
+        passLengthPlaceholder: "पासवर्ड की लंबाई",
+        yourNamePlaceholder: "आपका नाम",
+        partnerNamePlaceholder: "साथी का नाम",
+        // Policies
+        policiesTitle: "नीतियां और दिशानिर्देश",
+        privacyPolicyTitle: "गोपनीयता नीति",
+        privacyPolicyText: "हमारी वेबसाइट, पॉकेट जिनी, आपकी गोपनीयता की रक्षा के लिए प्रतिबद्ध है। हम अपने टूल्स में दर्ज कोई भी व्यक्तिगत डेटा एकत्र या संग्रहीत नहीं करते हैं। सभी गणनाएं और रूपांतरण सीधे आपके ब्राउज़र में किए जाते हैं। आपका डेटा कभी भी आपके डिवाइस को नहीं छोड़ता है। हम तृतीय-पक्ष विज्ञापन सेवाओं का उपयोग करते हैं जो विज्ञापन दिखाने के लिए कुकीज़ का उपयोग कर सकती हैं।",
+        termsTitle: "नियम एवं शर्तें",
+        termsText: "पॉकेट जिनी का उपयोग करके, आप इन शर्तों से सहमत होते हैं। प्रदान किए गए उपकरण केवल सूचनात्मक उद्देश्यों के लिए हैं। हम परिणामों की सटीकता की गारंटी नहीं देते हैं और उनके उपयोग से होने वाले किसी भी नुकसान के लिए उत्तरदायी नहीं हैं।",
+        disclaimerTitle: "अस्वीकरण",
+        disclaimerText: "वित्तीय कैलकुलेटर (ईएमआई, छूट, टिप) केवल अनुमान के लिए हैं और इन्हें वित्तीय सलाह नहीं माना जाना चाहिए। स्वास्थ्य संबंधी उपकरण जैसे बीएमआई कैलकुलेटर सामान्य जागरूकता के लिए हैं और पेशेवर चिकित्सा सलाह का विकल्प नहीं हैं।"
+      }
+    };
+
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    let currentLang = 'en';
+
+    function setLanguage(lang) {
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (languageStrings[lang][key]) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = languageStrings[lang][key];
                 } else {
-                    html.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
+                    element.innerText = languageStrings[lang][key];
                 }
-            });
-
-
-            // --- 2. LANGUAGE SWITCHER LOGIC ---
-            const langSwitcher = document.getElementById('lang-switcher');
-
-            // Language Data
-            const translations = {
-                'hi': {
-                    'site_title': 'WebToolBox - आपके काम आने वाले ऑनलाइन टूल्स',
-                    'hero_title': 'आपके हर काम आने वाले वेब टूल्स',
-                    'hero_subtitle': 'एक ही जगह पर पाएं दर्जनों मुफ्त कैलकुलेटर, कन्वर्टर, और जेनरेटर। आपका काम आसान बनाने के लिए, एक सुंदर और तेज इंटरफ़ेस में।',
-                    'tools_title': 'हमारे लोकप्रिय टूल्स',
-                    'tool_bmi_title': 'बीएमआई कैलकुलेटर',
-                    'tool_bmi_desc': 'अपने बॉडी मास इंडेक्स को मापें और अपनी फिटनेस का पता लगाएं।',
-                    'tool_pass_title': 'पासवर्ड जेनरेटर',
-                    'tool_pass_desc': 'ऑनलाइन सुरक्षा के लिए एक मजबूत और यूनिक पासवर्ड बनाएं।',
-                    'tool_qr_title': 'क्यूआर कोड जेनरेटर',
-                    'tool_qr_desc': 'किसी भी टेक्स्ट या वेबसाइट लिंक का तुरंत QR कोड बनाएं।',
-                    'tool_age_title': 'आयु कैलकुलेटर',
-                    'tool_age_desc': 'अपनी जन्मतिथि से अपनी सटीक उम्र, महीने और दिन जानें।',
-                    'tool_img_title': 'इमेज कन्वर्टर',
-                    'tool_img_desc': 'अपनी छवियों को JPG, PNG, WEBP जैसे फॉर्मेट में बदलें।',
-                    'tool_case_title': 'केस कन्वर्टर',
-                    'tool_case_desc': 'टेक्स्ट को अपरकेस, लोअरकेस या सेंटेंस केस में बदलें।',
-                    'footer_rights': 'सर्वाधिकार सुरक्षित।',
-                    'lang_button': 'English'
-                },
-                'en': {
-                    'site_title': 'WebToolBox - Your Everyday Online Tools',
-                    'hero_title': 'The Web Tools You Need, All In One Place',
-                    'hero_subtitle': 'Get dozens of free calculators, converters, and generators. Designed to make your work easier in a beautiful and fast interface.',
-                    'tools_title': 'Our Popular Tools',
-                    'tool_bmi_title': 'BMI Calculator',
-                    'tool_bmi_desc': 'Measure your Body Mass Index and check your fitness level.',
-                    'tool_pass_title': 'Password Generator',
-                    'tool_pass_desc': 'Create strong and unique passwords for your online security.',
-                    'tool_qr_title': 'QR Code Generator',
-                    'tool_qr_desc': 'Instantly create a QR code for any text or website link.',
-                    'tool_age_title': 'Age Calculator',
-                    'tool_age_desc': 'Find out your exact age, months, and days from your birth date.',
-                    'tool_img_title': 'Image Converter',
-                    'tool_img_desc': 'Convert your images to formats like JPG, PNG, WEBP.',
-                    'tool_case_title': 'Case Converter',
-                    'tool_case_desc': 'Change text to UPPERCASE, lowercase, or Sentence case.',
-                    'footer_rights': 'All Rights Reserved.',
-                    'lang_button': 'हिन्दी'
-                }
-            };
-
-            const setLanguage = (lang) => {
-                document.querySelectorAll('[data-lang-key]').forEach(element => {
-                    const key = element.getAttribute('data-lang-key');
-                    element.textContent = translations[lang][key];
-                });
-                html.setAttribute('lang', lang);
-                langSwitcher.textContent = translations[lang]['lang_button'];
-                localStorage.setItem('language', lang);
-            };
-
-            // Load saved language
-            const savedLang = localStorage.getItem('language') || 'hi';
-            setLanguage(savedLang);
-
-            langSwitcher.addEventListener('click', () => {
-                const currentLang = html.getAttribute('lang');
-                const newLang = currentLang === 'hi' ? 'en' : 'hi';
-                setLanguage(newLang);
-            });
+            }
         });
-    </script>
-</body>
-</html>
+    }
+
+    langToggleBtn.addEventListener('c
